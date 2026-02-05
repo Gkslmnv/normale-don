@@ -5,6 +5,18 @@ const daisies = ['🌼', '🌻', '🌸', '🌺', '🌷', '🌹', '💐', '🏵�
 const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘', '💞'];
 const allElements = [...daisies, ...hearts];
 
+// "Seni seviyorum" farklı dillerde
+const loveMessages = [
+    'Seni seviyorum', 'I love you', 'Je t\'aime', 'Te amo', 'Ich liebe dich',
+    'Ti amo', '愛してる', '사랑해', 'Jeg elsker dig', 'Eu te amo',
+    'Я тебя люблю', 'Te quiero', 'Ik hou van jou', 'S\'agapó',
+    'Jag älskar dig', 'Miluji tě', 'Ljubim te', 'Szeretlek',
+    'Te iubesc', 'Aš tave myliu', 'Kocham cię', 'Я тебе кохаю',
+    'Elskar deg', 'Rakastan sinua', 'Jeg elsker deg', 'Amo te',
+    'Eu amo-te', 'Te am', 'Szeretlek', 'Я тебя люблю',
+    'Ik hou van jou', 'Te quiero', '愛してる', '사랑해'
+];
+
 function createElement(x, y) {
     const element = document.createElement('div');
     element.className = 'emoji';
@@ -19,6 +31,22 @@ function createElement(x, y) {
     setTimeout(() => {
         element.remove();
     }, 7000);
+}
+
+function createLoveTextElement(x, y) {
+    const textElement = document.createElement('div');
+    textElement.className = 'love-text-small';
+    textElement.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+    textElement.style.left = x + 'px';
+    textElement.style.top = y + 'px';
+    textElement.style.animationDelay = Math.random() * 2 + 's';
+    textElement.style.animationDuration = (Math.random() * 5 + 4) + 's';
+    
+    animationContainer.appendChild(textElement);
+    
+    setTimeout(() => {
+        textElement.remove();
+    }, 9000);
 }
 
 function createLoveText() {
@@ -40,36 +68,34 @@ function createLoveText() {
 }
 
 function fillScreenWithLove() {
-    // İlk dalga: 80 adet
-    for (let i = 0; i < 80; i++) {
+    // Yüzlerce "seni seviyorum" mesajı
+    for (let i = 0; i < 150; i++) {
+        setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            createLoveTextElement(x, y);
+        }, i * 30);
+    }
+    
+    // Kalpler ve papatyalar
+    for (let i = 0; i < 100; i++) {
         setTimeout(() => {
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
             createElement(x, y);
-        }, i * 50);
+        }, i * 40);
     }
     
-    // İkinci dalga: 60 adet (1 saniye sonra)
+    // İkinci dalga: daha fazla mesaj
     setTimeout(() => {
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 100; i++) {
             setTimeout(() => {
                 const x = Math.random() * window.innerWidth;
                 const y = Math.random() * window.innerHeight;
-                createElement(x, y);
-            }, i * 40);
+                createLoveTextElement(x, y);
+            }, i * 25);
         }
-    }, 1000);
-    
-    // Üçüncü dalga: 40 adet (2 saniye sonra)
-    setTimeout(() => {
-        for (let i = 0; i < 40; i++) {
-            setTimeout(() => {
-                const x = Math.random() * window.innerWidth;
-                const y = Math.random() * window.innerHeight;
-                createElement(x, y);
-            }, i * 30);
-        }
-    }, 2000);
+    }, 1500);
 }
 
 button.addEventListener('click', function() {

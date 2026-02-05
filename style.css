@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #ff69b4, #ff1493, #ff69b4);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.love-text {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+    letter-spacing: 2px;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.normal-button {
+    background: linear-gradient(45deg, #ff1493, #ff69b4);
+    color: white;
+    border: 3px solid white;
+    padding: 20px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.normal-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 20, 147, 0.6);
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+}
+
+.normal-button:active {
+    transform: translateY(0);
+}
+
+.animation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    cursor: default;
+}
+
+.emoji {
+    position: absolute;
+    font-size: 30px;
+    animation: float 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation: firework 1.5s ease-out forwards;
+}
+
+@keyframes firework {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .love-text {
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+    
+    .normal-button {
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 0 20px;
+    }
+    
+    .emoji {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .love-text {
+        font-size: 22px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+    
+    .normal-button {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+    
+    .emoji {
+        font-size: 20px;
+    }
+}

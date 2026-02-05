@@ -22,48 +22,77 @@ body {
     z-index: 10;
 }
 
-.love-text {
-    color: white;
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    animation: pulse 2s ease-in-out infinite;
-    letter-spacing: 2px;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-.normal-button {
-    background: linear-gradient(45deg, #ff1493, #ff69b4);
-    color: white;
-    border: 3px solid white;
-    padding: 20px 40px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 50px;
+.gift-box {
+    position: relative;
+    width: 150px;
+    height: 150px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
-    text-transform: lowercase;
-    letter-spacing: 1px;
+    transition: transform 0.3s ease;
 }
 
-.normal-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 20, 147, 0.6);
+.gift-box:hover {
+    transform: scale(1.05);
+}
+
+.gift-body {
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    height: 100px;
+    background: linear-gradient(45deg, #ff1493, #ff69b4);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+}
+
+.gift-lid {
+    position: absolute;
+    top: 0;
+    width: 170px;
+    height: 30px;
     background: linear-gradient(45deg, #ff69b4, #ff1493);
+    border-radius: 10px;
+    left: -10px;
+    box-shadow: 0 5px 20px rgba(255, 20, 147, 0.3);
+    transform-origin: bottom left;
+    transition: transform 0.5s ease;
 }
 
-.normal-button:active {
-    transform: translateY(0);
+.gift-lid.open {
+    transform: rotate(-45deg);
+}
+
+.gift-ribbon {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 150px;
+    background: gold;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.gift-ribbon::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -15px;
+    width: 50px;
+    height: 50px;
+    background: gold;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px) rotate(-2deg); }
+    20%, 40%, 60%, 80% { transform: translateX(5px) rotate(2deg); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
 }
 
 .animation-container {
@@ -104,11 +133,11 @@ body {
 .love-text-small {
     position: absolute;
     color: white;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
     pointer-events: none;
-    animation: floatText 5s ease-in-out infinite;
+    animation: floatText 4s ease-in-out infinite;
     white-space: nowrap;
     z-index: 6;
 }
@@ -123,7 +152,7 @@ body {
         transform: translateY(80vh) rotate(10deg) scale(1);
     }
     50% {
-        transform: translateY(40vh) rotate(-5deg) scale(1.1);
+        transform: translateY(40vh) rotate(-5deg) scale(1.2);
         opacity: 1;
     }
     90% {
@@ -137,19 +166,37 @@ body {
 }
 
 @media (max-width: 768px) {
-    .love-text {
-        font-size: 28px;
-        margin-bottom: 25px;
+    .gift-box {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .gift-body {
+        width: 120px;
+        height: 80px;
+    }
+    
+    .gift-lid {
+        width: 140px;
+        height: 25px;
+        left: -10px;
+    }
+    
+    .gift-ribbon {
+        width: 15px;
+        height: 120px;
+        top: -40px;
+    }
+    
+    .gift-ribbon::before {
+        width: 40px;
+        height: 40px;
+        top: -25px;
+        left: -12px;
     }
     
     .love-text-small {
-        font-size: 12px;
-    }
-    
-    .normal-button {
-        padding: 15px 30px;
-        font-size: 16px;
-        margin: 0 20px;
+        font-size: 14px;
     }
     
     .emoji {
@@ -158,19 +205,37 @@ body {
 }
 
 @media (max-width: 480px) {
-    .love-text {
-        font-size: 22px;
-        margin-bottom: 20px;
-        letter-spacing: 1px;
+    .gift-box {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .gift-body {
+        width: 100px;
+        height: 70px;
+    }
+    
+    .gift-lid {
+        width: 120px;
+        height: 20px;
+        left: -10px;
+    }
+    
+    .gift-ribbon {
+        width: 12px;
+        height: 100px;
+        top: -35px;
+    }
+    
+    .gift-ribbon::before {
+        width: 35px;
+        height: 35px;
+        top: -20px;
+        left: -11px;
     }
     
     .love-text-small {
-        font-size: 10px;
-    }
-    
-    .normal-button {
-        padding: 12px 25px;
-        font-size: 14px;
+        font-size: 12px;
     }
     
     .emoji {

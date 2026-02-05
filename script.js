@@ -1,129 +1,123 @@
-const button = document.getElementById('normalButton');
+const giftBox = document.getElementById('giftBox');
+const giftLid = document.querySelector('.gift-lid');
 const animationContainer = document.getElementById('animationContainer');
 
-const daisies = ['🌼', '🌻', '🌸', '🌺', '🌷', '🌹', '💐', '🏵️'];
-const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘', '💞'];
-const allElements = [...daisies, ...hearts];
+const flowers = ['🌸', '🌺', '🌷', '🌹', '🌻', '🌼', '💐', '🏵️'];
+const loveMessages = ['Seni seviyorum berna', 'I love you berna', 'Te amo berna', 'Je t\'aime berna'];
 
-// "Seni seviyorum" farklı dillerde
-const loveMessages = [
-    'Seni seviyorum', 'I love you', 'Je t\'aime', 'Te amo', 'Ich liebe dich',
-    'Ti amo', '愛してる', '사랑해', 'Jeg elsker dig', 'Eu te amo',
-    'Я тебя люблю', 'Te quiero', 'Ik hou van jou', 'S\'agapó',
-    'Jag älskar dig', 'Miluji tě', 'Ljubim te', 'Szeretlek',
-    'Te iubesc', 'Aš tave myliu', 'Kocham cię', 'Я тебе кохаю',
-    'Elskar deg', 'Rakastan sinua', 'Jeg elsker deg', 'Amo te',
-    'Eu amo-te', 'Te am', 'Szeretlek', 'Я тебя люблю',
-    'Ik hou van jou', 'Te quiero', '愛してる', '사랑해'
-];
+let clickCount = 0;
+const requiredClicks = 3;
+let isOpened = false;
 
-function createElement(x, y) {
+function createFlower(x, y) {
     const element = document.createElement('div');
     element.className = 'emoji';
-    element.textContent = allElements[Math.floor(Math.random() * allElements.length)];
+    element.textContent = flowers[Math.floor(Math.random() * flowers.length)];
     element.style.left = x + 'px';
     element.style.top = y + 'px';
     element.style.animationDelay = Math.random() * 2 + 's';
-    element.style.animationDuration = (Math.random() * 4 + 3) + 's';
+    element.style.animationDuration = (Math.random() * 3 + 2) + 's';
     
     animationContainer.appendChild(element);
     
     setTimeout(() => {
         element.remove();
-    }, 7000);
+    }, 5000);
 }
 
-function createLoveTextElement(x, y) {
+function createLoveText(x, y) {
     const textElement = document.createElement('div');
     textElement.className = 'love-text-small';
     textElement.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
     textElement.style.left = x + 'px';
     textElement.style.top = y + 'px';
-    textElement.style.animationDelay = Math.random() * 2 + 's';
-    textElement.style.animationDuration = (Math.random() * 5 + 4) + 's';
+    textElement.style.animationDelay = Math.random() * 1 + 's';
+    textElement.style.animationDuration = (Math.random() * 4 + 3) + 's';
     
     animationContainer.appendChild(textElement);
     
     setTimeout(() => {
         textElement.remove();
-    }, 9000);
+    }, 7000);
 }
 
-function createLoveText() {
-    const loveText = document.createElement('h1');
-    loveText.className = 'love-text';
-    loveText.textContent = 'seni seviyorum berna';
+function openGiftBox() {
+    if (isOpened) return;
     
-    const container = document.querySelector('.container');
-    container.insertBefore(loveText, button);
+    isOpened = true;
+    giftLid.classList.add('open');
     
-    loveText.style.opacity = '0';
-    loveText.style.transform = 'scale(0.5)';
+    // 350 çiçek ve mesaj fırlat
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
     
-    setTimeout(() => {
-        loveText.style.transition = 'all 1s ease-out';
-        loveText.style.opacity = '1';
-        loveText.style.transform = 'scale(1)';
-    }, 100);
-}
-
-function fillScreenWithLove() {
-    // Yüzlerce "seni seviyorum" mesajı
-    for (let i = 0; i < 150; i++) {
+    // 250 çiçek
+    for (let i = 0; i < 250; i++) {
         setTimeout(() => {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            createLoveTextElement(x, y);
-        }, i * 30);
+            const angle = (Math.PI * 2 * i) / 250;
+            const radius = Math.random() * 300 + 100;
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+            createFlower(x, y);
+        }, i * 10);
     }
     
-    // Kalpler ve papatyalar
+    // 100 seni seviyorum mesajı
     for (let i = 0; i < 100; i++) {
         setTimeout(() => {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            createElement(x, y);
-        }, i * 40);
+            const angle = (Math.PI * 2 * i) / 100;
+            const radius = Math.random() * 250 + 150;
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+            createLoveText(x, y);
+        }, i * 15);
     }
     
-    // İkinci dalga: daha fazla mesaj
+    // Kutuyu gizle
     setTimeout(() => {
-        for (let i = 0; i < 100; i++) {
-            setTimeout(() => {
-                const x = Math.random() * window.innerWidth;
-                const y = Math.random() * window.innerHeight;
-                createLoveTextElement(x, y);
-            }, i * 25);
-        }
-    }, 1500);
+        giftBox.style.transition = 'opacity 1s ease-out';
+        giftBox.style.opacity = '0';
+    }, 2000);
 }
 
-button.addEventListener('click', function() {
-    createLoveText();
-    fillScreenWithLove();
+giftBox.addEventListener('click', function() {
+    if (isOpened) return;
     
-    // Butona efekt
-    button.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        button.style.transform = 'scale(1)';
-    }, 200);
+    clickCount++;
     
-    // Butonu tamamen gizle
+    // Titreme efekti
+    giftBox.classList.add('shake');
     setTimeout(() => {
-        button.style.transition = 'opacity 1s ease-out';
-        button.style.opacity = '0';
-        button.style.pointerEvents = 'none';
-    }, 1000);
-});
-
-// Sayfa yüklendiğinde birkaç element göster
-window.addEventListener('load', function() {
-    setTimeout(() => {
+        giftBox.classList.remove('shake');
+    }, 500);
+    
+    // Gerekli tık sayısına ulaşıldığında kutuyu aç
+    if (clickCount >= requiredClicks) {
+        setTimeout(() => {
+            openGiftBox();
+        }, 600);
+    }
+    
+    // Her tıkta birkaç çiçek fırlat (ipucu)
+    if (clickCount < requiredClicks) {
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 const x = Math.random() * window.innerWidth;
-                createElement(x, window.innerHeight);
-            }, i * 600);
+                const y = window.innerHeight - 100;
+                createFlower(x, y);
+            }, i * 100);
+        }
+    }
+});
+
+// Sayfa yüklendiğinde birkaç çiçek göster
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const x = Math.random() * window.innerWidth;
+                createFlower(x, window.innerHeight);
+            }, i * 800);
         }
     }, 1000);
 });
